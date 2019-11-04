@@ -1,14 +1,14 @@
-import React, { Component, Fragment } from "react";
-import Cabecalho from "./components/Cabecalho";
+import React, { Component } from "react";
 import "./App.css";
+import Cabecalho from "./components/Cabecalho";
+import NavMenu from "./components/NavMenu";
 
 class App extends Component {
   render() {
     return (
-      <Fragment>
-        <Cabecalho usuario="@omariosouto" />
-        Resto da página que ainda iremos adicionar
-      </Fragment>
+      <Cabecalho>
+        <NavMenu usuario="@omariosouto" />
+      </Cabecalho>
     );
   }
 }
