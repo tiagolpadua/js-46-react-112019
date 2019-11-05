@@ -1,10 +1,13 @@
 import React, { Component, Fragment } from "react";
 import Cabecalho from "../../components/Cabecalho";
 import Widget from "../../components/Widget";
+import { NotificacaoContext } from "../../context/NotificacaoContext";
 
 import "./loginPage.css";
 
 class LoginPage extends Component {
+  static contextType = NotificacaoContext;
+
   render() {
     return (
       <Fragment>

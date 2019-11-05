@@ -14,10 +14,14 @@ import * as serviceWorker from "./serviceWorker";
 // Roteamento
 import { BrowserRouter } from "react-router-dom";
 import Roteamento from "./routes.js";
+import { NotificacaoContextProvider } from "./context/NotificacaoContext";
+
 ReactDOM.render(
-  <BrowserRouter>
-    <Roteamento />
-  </BrowserRouter>,
+  <NotificacaoContextProvider>
+    <BrowserRouter>
+      <Roteamento />
+    </BrowserRouter>
+  </NotificacaoContextProvider>,
   document.getElementById("root")
 );
 // If you want your app to work offline and load faster, you can change
