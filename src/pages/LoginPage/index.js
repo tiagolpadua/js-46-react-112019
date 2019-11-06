@@ -8,6 +8,13 @@ import "./loginPage.css";
 class LoginPage extends Component {
   static contextType = NotificacaoContext;
 
+  constructor() {
+    super();
+    this.state = {
+      msgErro: ""
+    };
+  }
+
   fazerLogin = infosDoEvento => {
     infosDoEvento.preventDefault();
     const dadosDeLogin = {
@@ -39,6 +46,7 @@ class LoginPage extends Component {
         }
       })
       .catch(err => {
+        this.setState({ msgErro: `Erro	${err.status}: ${err.message}` });
         console.error(`[Erro	${err.status}]`, err.message);
       });
   };
@@ -80,9 +88,11 @@ class LoginPage extends Component {
                     name="senha"
                   />
                 </div>
-                {/* <div className="loginPage__errorBox">
-                                    Mensagem de erro!
-                                </div> */}
+                {this.state.msgErro && (
+                  <div className="loginPage__errorBox">
+                    {this.state.msgErro}
+                  </div>
+                )}
                 <div className="loginPage__inputWrap">
                   <button className="loginPage__btnLogin" type="submit">
                     Logar
