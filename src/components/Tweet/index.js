@@ -8,12 +8,12 @@ class Tweet extends Component {
         <div className="tweet__cabecalho">
           <img
             className="tweet__fotoUsuario"
-            src="https://placehold.it/50x50"
+            src={this.props.usuario.foto}
             alt=""
           />
-          <span className="tweet__nomeUsuario">Fulano de Tal</span>
-          <a href="/">
-            <span className="tweet__userName">@usuario</span>
+          <span className="tweet__nomeUsuario">{this.props.usuario.nome}</span>
+          <a href="">
+            <span className="tweet__userName">@{this.props.usuario.login}</span>
           </a>
         </div>
         <p className="tweet__conteudo">{this.props.texto}</p>

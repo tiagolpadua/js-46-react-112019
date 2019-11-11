@@ -18,10 +18,27 @@ class HomePage extends Component {
   adicionaTweet = infosDoEvento => {
     infosDoEvento.preventDefault();
     if (this.state.novoTweet.length > 0) {
-      this.setState({
-        tweets: [this.state.novoTweet, ...this.state.tweets],
-        novoTweet: ""
-      });
+      fetch(
+        `https://twitelum-api.herokuapp.com/tweets?X-AUTH-TOKEN=${localStorage.getItem(
+          "TOKEN"
+        )}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify({ conteudo: this.state.novoTweet })
+        }
+      )
+        .then(respostaDoServer => {
+          return respostaDoServer.json();
+        })
+        .then(tweetVindoDoServidor => {
+          console.log(tweetVindoDoServidor);
+          this.setState({
+            tweets: [tweetVindoDoServidor, ...this.state.tweets]
+          });
+        });
     }
   };
 
@@ -73,13 +90,13 @@ class HomePage extends Component {
           <Dashboard posicao="centro">
             <Widget>
               <div className="tweetsArea">
-                {this.state.tweets.length > 0 ? (
-                  this.state.tweets.map((tweetInfo, index) => {
-                    return <Tweet key={tweetInfo + index} texto={tweetInfo} />;
-                  })
-                ) : (
-                  <p>Crie seu primeiro tweet!</p>
-                )}
+                {this.state.tweets.map((tweetInfo, index) => (
+                  <Tweet
+                    key={tweetInfo._id}
+                    texto={tweetInfo.conteudo}
+                    usuario={tweetInfo.usuario}
+                  />
+                ))}
               </div>
             </Widget>
           </Dashboard>
