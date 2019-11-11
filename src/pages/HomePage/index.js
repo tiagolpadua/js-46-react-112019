@@ -15,6 +15,20 @@ class HomePage extends Component {
     };
   }
 
+  componentDidMount() {
+    fetch(
+      `https://twitelum-api.herokuapp.com/tweets?X-AUTH-TOKEN=${localStorage.getItem(
+        "TOKEN"
+      )}`
+    )
+      .then(response => response.json())
+      .then(tweets => {
+        this.setState({
+          tweets
+        });
+      });
+  }
+
   adicionaTweet = infosDoEvento => {
     infosDoEvento.preventDefault();
     if (this.state.novoTweet.length > 0) {
