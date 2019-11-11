@@ -43,13 +43,13 @@ class Tweet extends Component {
         </div>
         <p className="tweet__conteudo">{this.props.texto}</p>
         <footer className="tweet__footer">
-          <button className="btnLike	btn	btn--clean" onClick={this.likeHandler}>
+          <button className="btnLike btn btn--clean" onClick={this.likeHandler}>
             <svg
-              className={`icon	icon--small	iconHeart	${
+              className={`icon icon--small iconHeart ${
                 this.state.likeado ? "iconHeart--active" : ""
               }`}
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0	0	47.5	47.5"
+              viewBox="0 0 47.5 47.5"
             >
               <defs>
                 <clipPath id="a">
@@ -62,6 +62,14 @@ class Tweet extends Component {
             </svg>
             {this.state.totalLikes}
           </button>
+          {this.props.removivel && (
+            <button
+              onClick={this.props.removeHandler}
+              className="btn btn--blue btn--remove"
+            >
+              X
+            </button>
+          )}
         </footer>
       </article>
     );
