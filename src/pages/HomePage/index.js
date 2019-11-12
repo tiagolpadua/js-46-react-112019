@@ -42,15 +42,9 @@ class HomePage extends Component {
         tweets: store.getState()
       });
     });
-    fetch(
-      `https://twitelum-api.herokuapp.com/tweets?X-AUTH-TOKEN=${localStorage.getItem(
-        "TOKEN"
-      )}`
-    )
-      .then(response => response.json())
-      .then(tweets => {
-        store.dispatch({ type: "CARREGA_TWEETS", tweets });
-      });
+    TweetsService.carrega().then(tweets => {
+      store.dispatch({ type: "CARREGA_TWEETS", tweets });
+    });
   }
 
   adicionaTweet = infosDoEvento => {
