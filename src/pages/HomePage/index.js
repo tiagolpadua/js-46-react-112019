@@ -32,6 +32,12 @@ class HomePage extends Component {
   fechaModal = () => this.setState({ tweetAtivoNoModal: {} });
 
   componentDidMount() {
+    window.store.subscribe(() => {
+      this.setState({
+        tweets: window.store.getState()
+      });
+    });
+
     fetch(
       `https://twitelum-api.herokuapp.com/tweets?X-AUTH-TOKEN=${localStorage.getItem(
         "TOKEN"
@@ -39,9 +45,7 @@ class HomePage extends Component {
     )
       .then(response => response.json())
       .then(tweets => {
-        this.setState({
-          tweets
-        });
+        window.store.dispatch({ type: "CARREGA_TWEETS", tweets });
       });
   }
 

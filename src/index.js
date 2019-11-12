@@ -15,6 +15,7 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import Roteamento from "./routes.js";
 import { NotificacaoContextProvider } from "./context/NotificacaoContext";
+import "./store";
 
 ReactDOM.render(
   <NotificacaoContextProvider>
