@@ -8,8 +8,11 @@ import Tweet from "../../components/Tweet";
 import Widget from "../../components/Widget";
 import { Modal } from "../../components/Modal";
 import { TweetsService } from "../../services/TweetsService";
+import { ReactReduxContext } from "react-redux";
 
 class HomePage extends Component {
+  static contextType = ReactReduxContext;
+
   constructor() {
     super();
     this.state = {
@@ -33,15 +36,21 @@ class HomePage extends Component {
   fechaModal = () => this.setState({ tweetAtivoNoModal: {} });
 
   componentDidMount() {
-    window.store.subscribe(() => {
+    const store = this.context.store;
+    store.subscribe(() => {
       this.setState({
-        tweets: window.store.getState()
+        tweets: store.getState()
       });
     });
-
-    TweetsService.carrega().then(tweets => {
-      window.store.dispatch({ type: "CARREGA_TWEETS", tweets });
-    });
+    fetch(
+      `https://twitelum-api.herokuapp.com/tweets?X-AUTH-TOKEN=${localStorage.getItem(
+        "TOKEN"
+      )}`
+    )
+      .then(response => response.json())
+      .then(tweets => {
+        store.dispatch({ type: "CARREGA_TWEETS", tweets });
+      });
   }
 
   adicionaTweet = infosDoEvento => {

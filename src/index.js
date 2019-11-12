@@ -15,14 +15,17 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import Roteamento from "./routes.js";
 import { NotificacaoContextProvider } from "./context/NotificacaoContext";
-import "./store";
+import store from "./store";
+import { Provider } from "react-redux";
 
 ReactDOM.render(
-  <NotificacaoContextProvider>
-    <BrowserRouter>
-      <Roteamento />
-    </BrowserRouter>
-  </NotificacaoContextProvider>,
+  <Provider store={store}>
+    <NotificacaoContextProvider>
+      <BrowserRouter>
+        <Roteamento />
+      </BrowserRouter>
+    </NotificacaoContextProvider>
+  </Provider>,
   document.getElementById("root")
 );
 // If you want your app to work offline and load faster, you can change
