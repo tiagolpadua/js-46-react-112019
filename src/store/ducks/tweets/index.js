@@ -44,6 +44,15 @@ export const TweetsThunkActions = {
         type: "tweets/UNSET_TWEET_ATIVO"
       });
     };
+  },
+  like: idDoTweet => {
+    return async dispatch => {
+      dispatch({
+        type: "tweets/LIKE",
+        payload: { idDoTweet }
+      });
+      await TweetsService.like(idDoTweet);
+    };
   }
 };
 const INITIAL_STATE = {
@@ -107,6 +116,39 @@ export function tweetsReducer(state = INITIAL_STATE, action = {}) {
     return {
       ...state,
       activeDataItem: {}
+    };
+  }
+
+  if (action.type === "tweets/LIKE") {
+    const idDoTweetLikeado = action.payload.idDoTweet;
+    const stateParcial = state.data.reduce(
+      (stateParcial, tweetAtual) => {
+        const isLikedTweet = idDoTweetLikeado === tweetAtual._id;
+        if (isLikedTweet) {
+          const { likeado, totalLikes } = tweetAtual;
+          const updatedTweet = {
+            ...tweetAtual,
+            totalLikes: likeado ? totalLikes - 1 : totalLikes + 1,
+            likeado: !likeado
+          };
+          stateParcial.data = [...stateParcial.data, updatedTweet];
+          stateParcial.activeDataItem = Object.keys(stateParcial.activeDataItem)
+            .length
+            ? updatedTweet
+            : stateParcial.activeDataItem;
+        } else {
+          stateParcial.data = [...stateParcial.data, tweetAtual];
+        }
+        return stateParcial;
+      },
+      {
+        activeDataItem: state.activeDataItem,
+        data: []
+      }
+    );
+    return {
+      ...state,
+      ...stateParcial
     };
   }
 
