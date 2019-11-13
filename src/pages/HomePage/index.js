@@ -9,6 +9,7 @@ import Widget from "../../components/Widget";
 import { Modal } from "../../components/Modal";
 import { TweetsService } from "../../services/TweetsService";
 import { ReactReduxContext } from "react-redux";
+import { TweetsThunkActions } from "../../store/ducks/tweets";
 
 class HomePage extends Component {
   static contextType = ReactReduxContext;
@@ -39,12 +40,10 @@ class HomePage extends Component {
     const store = this.context.store;
     store.subscribe(() => {
       this.setState({
-        tweets: store.getState()
+        tweets: store.getState().tweets.data
       });
     });
-    TweetsService.carrega().then(tweets => {
-      store.dispatch({ type: "CARREGA_TWEETS", tweets });
-    });
+    store.dispatch(TweetsThunkActions.carregaTweets());
   }
 
   adicionaTweet = infosDoEvento => {
